@@ -7,7 +7,7 @@ Key areas & best practices in AWS DynamoDB
 
 ## Change in Mindset
  - Do not see NoSQL (in this case DynamoDB) from a relational database lens
- - Understand the normalization is not a criteria for DynamoDB
+ - Understand that normalization is not a criteria for DynamoDB
  - Relations will exist in DynamoDB but not in the form of Foreign Key
  - CAP Theorem:
     - Relational databases stresses on Strong consistency model (ACID)
@@ -205,13 +205,18 @@ Key areas & best practices in AWS DynamoDB
  - [Video: Data modeling with Amazon DynamoDB](https://www.youtube.com/watch?v=DIQVJqiSUkE) - re:Invent 2019
 
 ## FAQ
-How to name tables in DynamoDB per environment if the same AWS Account is used for multiple environments like (dev/test/stage)?
+**How to name tables in DynamoDB per environment if the same AWS Account is used for multiple environments like (dev/test/stage)?**
  
- - Ideally DynamoDB table should be created per account per region. The table name can be re-used for the same account in a different region. Example:<br>  
-   A table named `InsurancePolicy` can be present in an AWS account in `us-east-1` (N. Virginia) and also be present in the same account in region `us-east-2` (Ohio)<br/>
-   If allowed `dev` and `test` can use a different region than `stage` but keep the same table name.<br/>
-   If multi-region access is not possible then another option will be to use a convention so that the environment name is prefixed/suffixed to the table name for better visibility like `env.domain.table` : <br/>
-   *Example:*  
-   `dev.nationwide.InsurancePolicy`  => for `dev` environment
-   `test.nationwide.InsurancePolicy` => for `test` environment<br/>
-   The pipeline taking care of development and test respectively have to prefix the environment while working on their respective table
+Ideally DynamoDB table should be created per account per region. The table name can be re-used for the same account in a different region. Example:
+
+A table named `InsurancePolicy` can be present in an AWS account in `us-east-1` (N. Virginia) and also be present in the same account in region `us-east-2` (Ohio)
+
+If allowed `dev` and `test` can use a different region than `stage` but keep the same table name.
+
+If multi-region access is not possible then another option will be to use a convention so that the environment name is prefixed/suffixed to the table name for better visibility like `env.domain.table`:
+
+*Example:*  
+`dev.nationwide.InsurancePolicy`  => for `dev` environment
+`test.nationwide.InsurancePolicy` => for `test` environment
+
+The pipeline taking care of development and test respectively have to prefix the environment while working on their respective table
