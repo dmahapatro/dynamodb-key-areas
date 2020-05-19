@@ -194,13 +194,15 @@ Key areas & best practices in AWS DynamoDB
  - [Security Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html)
 
 ## TODOs
- - Add Sample code/template when possible
+ - Add sample code/template
  - Add edge cases scenario
 
 ## General Resources for Reference
  - [AWS DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
  - [The DynamoDB Book](https://www.dynamodbbook.com/) - By Alex DeBrie
  - [12 Important Lessons from The DynamoDB Book](https://www.jeremydaly.com/important-lessons-from-the-dynamodb-book/) - By Jeremy Daly
+ - [Video: Advanced Design Patterns for DynamoDB](https://www.youtube.com/watch?v=HaEPXoXVf2k) - re:Invent 2018
+ - [Video: Data modeling with Amazon DynamoDB](https://www.youtube.com/watch?v=DIQVJqiSUkE) - re:Invent 2019
 
 ## FAQ
 How to name tables in DynamoDB per environment if the same AWS Account is used for multiple environments like (dev/test/stage)?
