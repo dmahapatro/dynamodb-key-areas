@@ -55,6 +55,7 @@ Key areas & best practices in AWS DynamoDB
    - Understand when to use `BatchWriteItem`
    - Understand the benefits of [Conditional Writes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.ConditionalUpdate)
  - [Queries](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
+ - [Scans](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
  - [Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html)
    - [Global Secondary Indexes (GSI)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
      - An index with a partition key and a sort key that can be different from those on the base table
@@ -67,7 +68,6 @@ Key areas & best practices in AWS DynamoDB
    - See `Working with Indexes` for additional comparison characteristics
    - Indexes are the key features in DynamoDB and should be used efficiently to get the maximum benefit out of the table
    - Data Modeling decisions also depend on how Indexes will be built in future
- - [Scans](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
  - [Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
    - A DynamoDB stream is an ordered flow of information about changes to items in a DynamoDB table. When you enable a stream on a table, DynamoDB captures information about every modification to data items in the table
    - Similar to CDC (Change Data Capture) and gets integrated with services like AWS Lambda to do additional operations on change record.
@@ -198,11 +198,18 @@ Key areas & best practices in AWS DynamoDB
  - Add edge cases scenario
 
 ## General Resources for Reference
- - [AWS DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
- - [The DynamoDB Book](https://www.dynamodbbook.com/) - By Alex DeBrie
- - [12 Important Lessons from The DynamoDB Book](https://www.jeremydaly.com/important-lessons-from-the-dynamodb-book/) - By Jeremy Daly
- - [Video: Advanced Design Patterns for DynamoDB](https://www.youtube.com/watch?v=HaEPXoXVf2k) - re:Invent 2018
- - [Video: Data modeling with Amazon DynamoDB](https://www.youtube.com/watch?v=DIQVJqiSUkE) - re:Invent 2019
+ - Developer Guide
+   - [AWS DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+ - Books and Articles
+   - [The DynamoDB Book](https://www.dynamodbbook.com/) - By Alex DeBrie
+   - [12 Important Lessons from The DynamoDB Book](https://www.jeremydaly.com/important-lessons-from-the-dynamodb-book/) - By Jeremy Daly
+ - Videos
+   - [Advanced Design Patterns for DynamoDB](https://www.youtube.com/watch?v=HaEPXoXVf2k) - re:Invent 2018
+   - [Data modeling with Amazon DynamoDB](https://www.youtube.com/watch?v=DIQVJqiSUkE) - re:Invent 2019
+   - [Intro to Amazon DynamoDB](https://www.youtube.com/watch?v=W3S1OnDqWl4&list=PLg90sQCQnXJS9MhcgY8lJGP96kIuvKgum&index=25&t=32s)
+   - [Data Modeling in Amazon DynamoDB: Part 1](https://www.youtube.com/watch?v=Rmf8mrJ3X2s&list=PLg90sQCQnXJS9MhcgY8lJGP96kIuvKgum&index=26&t=37s)
+   - [Data Modeling in Amazon DynamoDB: Part 2](https://www.youtube.com/watch?v=KlhS7hSnFYs&list=PLg90sQCQnXJS9MhcgY8lJGP96kIuvKgum&index=27&t=0s)
+   - [Advanced NoSQL Data Modeling in Amazon DynamoDB](https://www.youtube.com/watch?v=nhUtZ7suZWI&list=PLg90sQCQnXJS9MhcgY8lJGP96kIuvKgum&index=28&t=0s)
 
 ## FAQ
 **How to name tables in DynamoDB per environment if the same AWS Account is used for multiple environments like (dev/test/stage)?**
