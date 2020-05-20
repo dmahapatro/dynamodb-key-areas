@@ -17,6 +17,31 @@ Key areas & best practices in AWS DynamoDB
     - Take a good amount of time to understand the rationale of data, how will it be retreived, how will it be written to and from DynamoDB Tables
     - Above analysis will drive the performance and cost of DynamoDB
 
+## Key Concepts to understand
+ - [Tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
+ - [Items](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html)
+   - Understand when to use `UpdateItem` vs `PutItem`
+   - Understand when to use `BatchWriteItem`
+   - Understand the benefits of [Conditional Writes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.ConditionalUpdate)
+ - [Queries](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
+ - [Scans](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
+ - [Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html)
+   - [Global Secondary Indexes (GSI)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
+     - An index with a partition key and a sort key that can be different from those on the base table
+     - Consumes additional RCU and WCU than the base table. Hence, additional cost
+     - GSI can be added to base table after table creation
+   - [Local Secondary Indexes (LSI)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html)
+     - An index that has the same partition key as the base table, but a different sort key
+     - Uses the RCU and WCU allocated to the base table.
+     - LSI can only be added to table during table creation
+   - See `Working with Indexes` for additional comparison characteristics
+   - Indexes are the key features in DynamoDB and should be used efficiently to get the maximum benefit out of the table
+   - Data Modeling decisions also depend on how Indexes will be built in future
+ - [Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+   - A DynamoDB stream is an ordered flow of information about changes to items in a DynamoDB table. When you enable a stream on a table, DynamoDB captures information about every modification to data items in the table
+   - Similar to CDC (Change Data Capture) and gets integrated with services like AWS Lambda to do additional operations on change record.
+   - Streams are really helpful to build aggregations where item changes are processed via Lambda and the Lambda writes back to DynamoDB with the aggregated value
+
 ## How to model Data in DynamoDB?
  - For new applications, review user stories about activities and objectives. Document the various use cases you identify, and analyze the access patterns that they require.
  - For existing applications, analyze query logs to find out how people are currently using the system and what the key access patterns are.
@@ -47,31 +72,6 @@ Key areas & best practices in AWS DynamoDB
      - You run applications whose traffic is consistent or ramps gradually.
      - You can forecast capacity requirements to control costs.
    - [Reference Document](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual)
-
-## Key Concepts to understand
- - [Tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
- - [Items](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html)
-   - Understand when to use `UpdateItem` vs `PutItem`
-   - Understand when to use `BatchWriteItem`
-   - Understand the benefits of [Conditional Writes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.ConditionalUpdate)
- - [Queries](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
- - [Scans](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
- - [Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html)
-   - [Global Secondary Indexes (GSI)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
-     - An index with a partition key and a sort key that can be different from those on the base table
-     - Consumes additional RCU and WCU than the base table. Hence, additional cost
-     - GSI can be added to base table after table creation
-   - [Local Secondary Indexes (LSI)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html)
-     - An index that has the same partition key as the base table, but a different sort key
-     - Uses the RCU and WCU allocated to the base table.
-     - LSI can only be added to table during table creation
-   - See `Working with Indexes` for additional comparison characteristics
-   - Indexes are the key features in DynamoDB and should be used efficiently to get the maximum benefit out of the table
-   - Data Modeling decisions also depend on how Indexes will be built in future
- - [Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
-   - A DynamoDB stream is an ordered flow of information about changes to items in a DynamoDB table. When you enable a stream on a table, DynamoDB captures information about every modification to data items in the table
-   - Similar to CDC (Change Data Capture) and gets integrated with services like AWS Lambda to do additional operations on change record.
-   - Streams are really helpful to build aggregations where item changes are processed via Lambda and the Lambda writes back to DynamoDB with the aggregated value
 
 ## Security
  - Encryption at Rest
