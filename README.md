@@ -256,17 +256,38 @@ Key areas & best practices in AWS DynamoDB
     -	Security is policy based
 
 - High level diagrams
+  - **Access to DynamoDB without an endpoint**
+  
+  ![](images/DynamoDBNoEndpoint.png)
+  - **Access to DynamoDB via endpoint**
+  
+  ![](images/DynamoDBEndpoint.png)
+  
+  As you can see from the architectural diagrams, the connections from the VPC to the DynamoDB service without an endpoint will go through the open Internet, while the connections using the endpoint will remain inside of the AWS network. Which provides two main benefits for Nationwide: 1) Increased security and 2) Faster performance.
  
-
- 
+ - DynamoDB gateway endpoint considerations for Nationwide  
+    -	The DynamoDB gateway endpoint default policy will allow access to any user or service within the VPC
+    -	Your own application in your VPC
+    -	DynamoDB Streams cannot be accessed through a VPC endpoint
+    -	There is no support for cross-region requests
+    -	CloudTrail captures the private IP address of the EC2 instance and endpoint ID for any DynamoDB actions
+    -	During implementation, any open connections using public IPv4 addresses will get disconnected
 
 ## Best Practices
  - [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
  - [Security Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html)
 
+## DynamoDB Access Patterns
+
+This section will be use to document DynamoDB access patterns that can be leveraged across Nationwide applications.
+
 ## TODOs
  - Add sample code/template
  - Add edge cases scenario
+
+## NEXT STEPS
+
+Involve AWS in Nationwide meetings/conversations regarding the implementation of DynamoDB, so we can better understand the business requirements, identify areas were AWS can bring value and tailor our recommendations to Nationwide.
 
 ## General Resources for Reference
  - Developer Guide
