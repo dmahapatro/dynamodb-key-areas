@@ -227,3 +227,16 @@ If multi-region access is not possible then another option will be to use a conv
 `test.nationwide.InsurancePolicy` => for `test` environment
 
 The pipeline taking care of development and test respectively have to prefix the environment while working on their respective table
+
+**Do DynamoDB indexes use additional storage, separate from base table?**
+The short answer is YES.
+ 
+When an application writes an item to a table, DynamoDB automatically copies the correct subset of attributes to any local or global secondary indexes in which those attributes should appear. Your AWS account is charged for storage of the item in the base table and also for storage of attributes in any local or global secondary indexes on that table. 
+
+To estimate the storage requirements for a local or global secondary index, you can estimate the average size of an item in the index and then multiply by the number of items in the base table. 
+ 
+If a table contains an item where a particular attribute is not defined, but that attribute is defined as an index sort key, then DynamoDB does not write any data for that item to the index. 
+ 
+For additional information, please reference the following two links:
+   - [Reference Document - DynamoDB LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html#LSI.StorageConsiderations) - re:Invent 2018
+   - [Reference Document - DynamoDB GSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.StorageConsiderations) - re:Invent 2019
