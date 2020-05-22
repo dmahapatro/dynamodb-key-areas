@@ -48,6 +48,32 @@ Key areas & best practices in AWS DynamoDB
  - [Reference](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-modeling-nosql.html)
  - [Example](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-modeling-nosql-B.html)
 
+## Recommendations/strategies to define access patterns
+- Tenets of DynamoDB Data Modeling
+  - Understand the user case
+  - Identify the access patterns
+  - Read/Write workloads
+  - Query dimensions and aggregations
+  - Data Modeling
+  - Using NoSQL design patterns
+- Pattern identification process
+  -	Data architect and business analyst interview the end users to identify how data will be queried
+    -	For new applications, review user stories about activities and objectives.
+    -	Document the various use cases you identify, and analyze the access patterns that they require.
+    -	For existing applications, analyze query logs to find out how people are currently using the system and what the key access patterns are.
+  -	Data Architect discovers the following properties of the access patterns
+    -	Data size: Knowing how much data will be stored and requested at one time will help determine the most effective way to partition the data.
+    -	Data shape: Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.
+    -	Data velocity: DynamoDB scales by increasing the number of physical partitions that are available to process queries, and by efficiently distributing data across those partitions. Knowing in advance what the peak query loads might help determine how to partition data to best use I/O capacity.
+  -	Business Users prioritizes the queries and identify the most common queries.
+ -	Types of relationships
+    -	One-to-many
+    -	Many-to-many
+    -	Filtering
+    -	Sorting
+  - [Reference Document](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html)
+
+
 ## What is RCU & WCU?
  - **RCU (Read Capacity Unit):**
    - One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size
@@ -185,9 +211,54 @@ Key areas & best practices in AWS DynamoDB
     ]
   }  
   ```
-  - `dynamodb:LeadingKeys` – This condition key allows users to access only the items where the partition key value matches their user ID.
+   - `dynamodb:LeadingKeys` – This condition key allows users to access only the items where the partition key value matches their user ID.
 
-  - `dynamodb:Attributes` – This condition key limits access to the specified attributes so that only the actions listed in the permissions policy can return values for these attributes. In addition, the `StringEqualsIfExists` clause ensures that the app must always provide a list of specific attributes to act upon and that the app can't request all attributes.
+   - `dynamodb:Attributes` – This condition key limits access to the specified attributes so that only the actions listed in the permissions policy can return values for these attributes. In addition, the `StringEqualsIfExists` clause ensures that the app must always provide a list of specific attributes to act upon and that the app can't request all attributes.
+
+- **Security Access Patterns**
+  -	[DynamoDB Preventative Security Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security-preventative.html) 
+    -	Encryption at rest
+    -	Use IAM roles to authenticate access to DynamoDB
+    -	Use IAM policies for DynamoDB base authorization
+    -	Use IAM policy conditions for fine-grained access control
+    -	Use a VPC endpoint and policies to access DynamoDB
+    -	Consider client-side encryption
+  -	[DynamoDB Detective Security Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security-detective.html)
+    -	Use AWS CloudTrail to monitor AWS managed KMS key usage
+    -	Use CloudTrail to monitor DynamoDB control-plane operations
+    -	Consider using DynamoDB Streams to monitor modify/update data-plane operations
+    -	Monitor DynamoDB configuration with AWS Config
+    -	Monitor DynamoDB compliance with AWS Config rules
+    -	Tag your DynamoDB resources for identification and automation
+
+## Deep Dive Concepts
+
+**VPC Endpoints**
+
+- What are VPC Endpoints?
+  
+  A VPC endpoint is a connectivity method that allows you to connect your VPC to AWS services without ever leaving the AWS network (ie. no communication via the Open Internet). In AWS, there are three main types of endpoints:
+  -	Endpoint Service
+    -	Your own application in your VPC
+  -	Interface Endpoints
+    -	AZ based
+    -	Create a network interface (ENIs)
+    -	Security is handled via Security Groups
+    -	10Gbs/sec
+    -	Not highly available by default
+    -	Use DNS tables
+  -	Gateway Endpoints
+    - Gateway that routes traffic to supported AWS services
+    -	Associated services (S3 and DynamoDB)
+    -	They belong to the VPC
+    -	You need to configure the route tables
+    -	VPC based
+    -	Security is policy based
+
+- High level diagrams
+ 
+
+ 
 
 ## Best Practices
  - [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
@@ -229,6 +300,7 @@ If multi-region access is not possible then another option will be to use a conv
 The pipeline taking care of development and test respectively have to prefix the environment while working on their respective table
 
 **Do DynamoDB indexes use additional storage, separate from base table?**
+
 The short answer is YES.
  
 When an application writes an item to a table, DynamoDB automatically copies the correct subset of attributes to any local or global secondary indexes in which those attributes should appear. Your AWS account is charged for storage of the item in the base table and also for storage of attributes in any local or global secondary indexes on that table. 
@@ -238,5 +310,5 @@ To estimate the storage requirements for a local or global secondary index, you 
 If a table contains an item where a particular attribute is not defined, but that attribute is defined as an index sort key, then DynamoDB does not write any data for that item to the index. 
  
 For additional information, please reference the following two links:
-   - [Reference Document - DynamoDB LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html#LSI.StorageConsiderations) - re:Invent 2018
-   - [Reference Document - DynamoDB GSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.StorageConsiderations) - re:Invent 2019
+   - [Reference Document - DynamoDB LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html#LSI.StorageConsiderations)
+   - [Reference Document - DynamoDB GSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.StorageConsiderations)
