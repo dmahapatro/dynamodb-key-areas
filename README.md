@@ -42,6 +42,9 @@ Key areas & best practices in AWS DynamoDB
    - Similar to CDC (Change Data Capture) and gets integrated with services like AWS Lambda to do additional operations on change record.
    - Streams are really helpful to build aggregations where item changes are processed via Lambda and the Lambda writes back to DynamoDB with the aggregated value
  - [DAX](https://aws.amazon.com/dynamodb/dax/#:~:text=Amazon%20DynamoDB%20Accelerator%20(DAX)%20is,millions%20of%20requests%20per%20second)
+   - Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for Amazon DynamoDB that delivers up to a 10 times performance     improvement—from milliseconds to microseconds—even at millions of requests per second.
+
+
 
 ## How to model Data in DynamoDB?
  - For new applications, review user stories about activities and objectives. Document the various use cases you identify, and analyze the access patterns that they require.
